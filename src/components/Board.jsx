@@ -15,7 +15,7 @@ export default function Board(props) {
 
   return (
     <div>
-      <span>"PLAYERS-NAME" It's your turn</span>
+      <span>It's your turn: {xTurn ? "X" : "O"} </span>
 
       <div>
         {renderSquare(0)}
