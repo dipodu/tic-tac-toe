@@ -5,19 +5,6 @@ import Player from "./components/Player.jsx";
 import Board from "./components/Board.jsx";
 
 function App() {
-  const [boardSquares, setBoardSquares] = useState(Array(9).fill(null));
-  const [xIsNext, setXisNext] = useState(true);
-
-  const handleClick = (index) => {
-    const currentSquares = [...boardSquares];
-    //check if square has already been clicked
-    if (currentSquares[index] !== null) return;
-
-    currentSquares[index] = xIsNext ? "X" : "O";
-    setXisNext(!xIsNext);
-    setBoardSquares(currentSquares);
-  };
-
   return (
     <Container id="main">
       <Row className="justify-content-center">
@@ -40,11 +27,7 @@ function App() {
           style={{ border: "dashed blue", padding: "1em" }}
           sm="6"
         >
-          <Board
-            stateOfBoard={boardSquares}
-            xTurn={xIsNext}
-            onClickSquare={handleClick}
-          />
+          <Board />
         </Col>
 
         <Col style={{ border: "dashed yellow", padding: "1em" }} sm="3">
