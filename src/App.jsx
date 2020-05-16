@@ -7,31 +7,21 @@ import Board from "./components/Board.jsx";
 function App() {
   return (
     <Container id="main">
-      <Row className="justify-content-center">
+      <Row className="header">
         <h1>TIC TAC TOE GAME</h1>
       </Row>
 
-      <Row
-        style={{
-          border: "dashed red",
-          height: "80%",
-          padding: "2em",
-        }}
-      >
-        <Col style={{ border: "dashed yellow", padding: "1em" }} sm="3">
+      <Row className="main-body">
+        <Col className="playerScoreCol" sm="3">
           <Player player="dipz" score="5" />
         </Col>
 
-        <Col
-          className="d-flex flex-column align-items-center"
-          style={{ border: "dashed blue", padding: "1em" }}
-          sm="6"
-        >
+        <Col className="game-col" sm="6">
           <Board />
         </Col>
 
-        <Col style={{ border: "dashed yellow", padding: "1em" }} sm="3">
-          <Player player="ola" score="9" />
+        <Col className="playerScoreCol" sm="3">
+          <Player player="olaaaaaa" score="900" />
         </Col>
       </Row>
     </Container>

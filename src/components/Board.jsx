@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Row } from "react-bootstrap";
+import "../App.css";
 
 export default function Board() {
   const [boardSquares, setBoardSquares] = useState(Array(9).fill(null));
@@ -29,23 +30,25 @@ export default function Board() {
     : `It's your turn: ${xIsNext ? "X" : "O"}`;
 
   return (
-    <div>
+    <div className="tic-col">
       <div className="status">{status}</div>
 
-      <div>
-        {renderSquare(0)}
-        {renderSquare(1)}
-        {renderSquare(2)}
-      </div>
-      <div>
-        {renderSquare(3)}
-        {renderSquare(4)}
-        {renderSquare(5)}
-      </div>
-      <div>
-        {renderSquare(6)}
-        {renderSquare(7)}
-        {renderSquare(8)}
+      <div className="tic-game">
+        <div className="tic-row">
+          {renderSquare(0)}
+          {renderSquare(1)}
+          {renderSquare(2)}
+        </div>
+        <div className="tic-row">
+          {renderSquare(3)}
+          {renderSquare(4)}
+          {renderSquare(5)}
+        </div>
+        <div className="tic-row">
+          {renderSquare(6)}
+          {renderSquare(7)}
+          {renderSquare(8)}
+        </div>
       </div>
     </div>
   );
@@ -53,7 +56,7 @@ export default function Board() {
 
 function Square(props) {
   return (
-    <Button className="square" onClick={props.onClick}>
+    <Button className="btn-dark" onClick={props.onClick}>
       {props.value}
     </Button>
   );
