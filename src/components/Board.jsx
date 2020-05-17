@@ -5,17 +5,27 @@ import "../App.css";
 export default function Board() {
   const [boardSquares, setBoardSquares] = useState(Array(9).fill(null));
   const [xIsNext, setXisNext] = useState(true);
+  const [gameIsOver, setGameIsOver] = useState(false);
+  const [moveNumber, setMoveNumber] = useState(0);
 
   const handleClick = (index) => {
     const currentSquares = [...boardSquares];
     //check if square has already been clicked
     if (currentSquares[index] !== null || calculateWinner(boardSquares)) return;
 
+    moveMade();
     currentSquares[index] = xIsNext ? "X" : "O";
+    setBoardSquares(currentSquares);
+
+    console.log(`Move Number:  ${moveNumber}`);
+    // const isDraw = checkIfDraw(boardSquares);
 
     setXisNext(!xIsNext);
-    setBoardSquares(currentSquares);
   };
+
+  function moveMade() {
+    setMoveNumber(moveNumber + 1);
+  }
 
   const renderSquare = (index) => {
     return (
@@ -27,6 +37,8 @@ export default function Board() {
   const winner = calculateWinner(boardSquares);
   status = winner
     ? `${winner} IS THE WINNER`
+    : moveNumber === 9
+    ? "ITS A DRAW"
     : `It's your turn: ${xIsNext ? "X" : "O"}`;
 
   return (
@@ -60,6 +72,10 @@ function Square(props) {
       <span className="cellXO">{props.value}</span>
     </Button>
   );
+}
+
+function checkIfDraw(squares) {
+  return false;
 }
 
 function calculateWinner(squares) {
