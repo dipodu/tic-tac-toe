@@ -57,7 +57,7 @@ export default function Board() {
 function Square(props) {
   return (
     <Button className="btn-dark" onClick={props.onClick}>
-      {props.value}
+      <span className="cellXO">{props.value}</span>
     </Button>
   );
 }

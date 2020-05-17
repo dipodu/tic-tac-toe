@@ -21,7 +21,7 @@ function App() {
         </Col>
 
         <Col className="playerScoreCol" sm="3">
-          <Player player="olaaaaaa" score="900" />
+          <Player player="ola" score="900" />
         </Col>
       </Row>
     </Container>
