@@ -16,11 +16,12 @@ export default function Board() {
     moveMade();
     currentSquares[index] = xIsNext ? "X" : "O";
     setBoardSquares(currentSquares);
-
-    console.log(`Move Number:  ${moveNumber}`);
-    // const isDraw = checkIfDraw(boardSquares);
-
     setXisNext(!xIsNext);
+
+    console.log(boardSquares);
+
+    // console.log(`Move Number:  ${moveNumber}`);
+    // const isDraw = checkIfDraw(boardSquares);
   };
 
   function moveMade() {
@@ -32,6 +33,14 @@ export default function Board() {
       <Square value={boardSquares[index]} onClick={() => handleClick(index)} />
     );
   };
+
+  function handleRestart() {
+    const currentSquares = Array(9).fill(null);
+    const xNext = true;
+    setBoardSquares(currentSquares);
+    setXisNext(xNext);
+    setMoveNumber(0);
+  }
 
   let status;
   const winner = calculateWinner(boardSquares);
@@ -62,6 +71,10 @@ export default function Board() {
           {renderSquare(8)}
         </div>
       </div>
+
+      <Button id="resetButton" className="btn-success" onClick={handleRestart}>
+        RESET
+      </Button>
     </div>
   );
 }
