@@ -85,7 +85,7 @@ h3 {
 }
 
 .imagePic {
-  width: 14em;
+  width: 100%;
   height: 11em;
 }
 
@@ -93,6 +93,12 @@ h3 {
   text-align: center;
 
   font-size: 7em;
+}
+
+.playerScoreCol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .footer {

@@ -4,7 +4,13 @@ import "./App.css";
 import Player from "./components/Player.jsx";
 import Board from "./components/Board.jsx";
 
+const player1URLImage = "./images/player1image.png";
+const player2URLImage = "./images/player2image.png";
+
 function App() {
+  const [player1Score, setPlayer1Score] = useState(0);
+  const [player2Score, setPlayer2Score] = useState(0);
+
   return (
     <Container id="main">
       <Row className="header">
@@ -13,15 +19,23 @@ function App() {
 
       <Row className="main-body">
         <Col className="playerScoreCol" sm="3">
-          <Player player="dipz" score="5" />
+          <Player
+            player="Player1"
+            score={player1Score}
+            picture={player1URLImage}
+          />
         </Col>
 
-        <Col className="game-col" sm="6">
+        <Col sm="6">
           <Board />
         </Col>
 
         <Col className="playerScoreCol" sm="3">
-          <Player player="ola" score="900" />
+          <Player
+            player="Player2"
+            score={player2Score}
+            picture={player2URLImage}
+          />
         </Col>
       </Row>
     </Container>

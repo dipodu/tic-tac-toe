@@ -4,10 +4,10 @@ import { Col, Card } from "react-bootstrap";
 export default function Player(props) {
   const { player, score, picture } = props;
   return (
-    <Col className="playerCol">
+    <Col>
       <div className="card">
         <div className="image">
-          <img src={picture} className="imagePic" />
+          <img src={picture} className="imagePic" alt="playerTitle" />
         </div>
         <div className="card-inner">
           <div className="header">
