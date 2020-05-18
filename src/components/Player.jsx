@@ -2,21 +2,22 @@ import React from "react";
 import { Col, Card } from "react-bootstrap";
 
 export default function Player(props) {
-  const { player, score } = props;
+  const { player, score, picture } = props;
   return (
-    <Col style={{ width: "100%", height: "100%", border: "dashed pink" }}>
-      <Card
-        className="d-flex flex-column align-items-center "
-        style={{ width: "100%", height: "100%" }}
-      >
-        <Card.Title>{player}</Card.Title>
-
-        <Card.Body>
-          <span>Points</span>
-
-          <Card.Text>{score}</Card.Text>
-        </Card.Body>
-      </Card>
+    <Col className="playerCol">
+      <div className="card">
+        <div className="image">
+          <img src={picture} className="imagePic" />
+        </div>
+        <div className="card-inner">
+          <div className="header">
+            <h2>{player}</h2>
+          </div>
+          <div className="playerScore">
+            <p>{score}</p>
+          </div>
+        </div>
+      </div>
     </Col>
   );
 }
