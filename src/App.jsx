@@ -11,6 +11,10 @@ function App() {
   const [player1Score, setPlayer1Score] = useState(0);
   const [player2Score, setPlayer2Score] = useState(0);
 
+  function updateScore(whoWon) {
+    console.log(`THE WINNER IS:  ${whoWon}`);
+  }
+
   return (
     <Container id="main">
       <Row className="header">
@@ -23,6 +27,7 @@ function App() {
             player="Player1"
             score={player1Score}
             picture={player1URLImage}
+            onGameOver={updateScore}
           />
         </Col>
 

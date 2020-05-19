@@ -5,28 +5,29 @@ import "../App.css";
 export default function Board() {
   const [boardSquares, setBoardSquares] = useState(Array(9).fill(null));
   const [xIsNext, setXisNext] = useState(true);
-  const [gameIsOver, setGameIsOver] = useState(false);
   const [moveNumber, setMoveNumber] = useState(0);
+  const [isGameOver, setisGameOver] = useState(false);
 
   const handleClick = (index) => {
     const currentSquares = [...boardSquares];
-    //check if square has already been clicked
-    if (currentSquares[index] !== null || calculateWinner(boardSquares)) return;
+    if (isGameOver) {
+      return;
+      //check if square has already been clicked
+    } else if (currentSquares[index] !== null) {
+      return;
+    } else if (calculateWinner(boardSquares)) {
+      setisGameOver(true);
+
+      console.log(`IS THERE A WINNER:  ${isGameOver}`);
+      return;
+    }
 
     moveMade();
     currentSquares[index] = xIsNext ? "X" : "O";
     setBoardSquares(currentSquares);
     setXisNext(!xIsNext);
-
-    console.log(boardSquares);
-
-    // console.log(`Move Number:  ${moveNumber}`);
-    // const isDraw = checkIfDraw(boardSquares);
+    console.log(`IS THERE A WINNER:  ${isGameOver}`);
   };
-
-  function moveMade() {
-    setMoveNumber(moveNumber + 1);
-  }
 
   const renderSquare = (index) => {
     return (
@@ -34,12 +35,17 @@ export default function Board() {
     );
   };
 
+  function moveMade() {
+    setMoveNumber(moveNumber + 1);
+  }
+
   function handleRestart() {
     const currentSquares = Array(9).fill(null);
     const xNext = true;
     setBoardSquares(currentSquares);
     setXisNext(xNext);
     setMoveNumber(0);
+    setisGameOver(false);
   }
 
   let status;
@@ -85,10 +91,6 @@ function Square(props) {
       <span className="cellXO">{props.value}</span>
     </Button>
   );
-}
-
-function checkIfDraw(squares) {
-  return false;
 }
 
 function calculateWinner(squares) {
