@@ -1,33 +1,49 @@
-import React, { useState } from "react";
-import { Button, Row } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Button } from "react-bootstrap";
 import "../App.css";
 
-export default function Board() {
+export default function Board(props) {
   const [boardSquares, setBoardSquares] = useState(Array(9).fill(null));
   const [xIsNext, setXisNext] = useState(true);
   const [moveNumber, setMoveNumber] = useState(0);
-  const [isGameOver, setisGameOver] = useState(false);
+  const [isGameOver, setIsGameOver] = useState(false);
+
+  const { updateWinnerScore } = props;
 
   const handleClick = (index) => {
     const currentSquares = [...boardSquares];
-    if (isGameOver) {
-      return;
-      //check if square has already been clicked
-    } else if (currentSquares[index] !== null) {
+
+    if (currentSquares[index] !== null) {
       return;
     } else if (calculateWinner(boardSquares)) {
-      setisGameOver(true);
-
-      console.log(`IS THERE A WINNER:  ${isGameOver}`);
       return;
     }
-
     moveMade();
     currentSquares[index] = xIsNext ? "X" : "O";
     setBoardSquares(currentSquares);
     setXisNext(!xIsNext);
-    console.log(`IS THERE A WINNER:  ${isGameOver}`);
   };
+
+  useEffect(() => {
+    //calculate if game is over
+    const state = calculateWinner(boardSquares);
+    const moves = moveNumber;
+
+    const isGameFinished =
+      state === "X" || state === "O" || (state === null && moves === 9)
+        ? true
+        : false;
+
+    setIsGameOver(isGameFinished);
+  }, [boardSquares]);
+
+  useEffect(() => {
+    //WHEN GAME IS OVER
+
+    const result = calculateWinner(boardSquares);
+
+    updateWinnerScore(result);
+  }, [isGameOver]);
 
   const renderSquare = (index) => {
     return (
@@ -45,7 +61,6 @@ export default function Board() {
     setBoardSquares(currentSquares);
     setXisNext(xNext);
     setMoveNumber(0);
-    setisGameOver(false);
   }
 
   let status;
@@ -55,6 +70,40 @@ export default function Board() {
     : moveNumber === 9
     ? "ITS A DRAW"
     : `It's your turn: ${xIsNext ? "X" : "O"}`;
+
+  function Square(props) {
+    return (
+      <Button className="btn-dark" onClick={props.onClick}>
+        <span className="cellXO">{props.value}</span>
+      </Button>
+    );
+  }
+
+  function calculateWinner(squares) {
+    const winningCombinations = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+
+    for (let i = 0; i < winningCombinations.length; i++) {
+      const [a, b, c] = winningCombinations[i];
+      //Check to see if values in current square array matches any of the winning combinations
+      if (
+        squares[a] &&
+        squares[a] === squares[b] &&
+        squares[b] === squares[c]
+      ) {
+        return squares[a];
+      }
+    }
+    return null;
+  }
 
   return (
     <div className="tic-col">
@@ -83,35 +132,4 @@ export default function Board() {
       </Button>
     </div>
   );
-}
-
-function Square(props) {
-  return (
-    <Button className="btn-dark" onClick={props.onClick}>
-      <span className="cellXO">{props.value}</span>
-    </Button>
-  );
-}
-
-function calculateWinner(squares) {
-  const winningCombinations = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-
-  for (let i = 0; i < winningCombinations.length; i++) {
-    const [a, b, c] = winningCombinations[i];
-
-    //Check to see if values in current square array matches any of the winning combinations
-    if (squares[a] && squares[a] === squares[b] && squares[b] === squares[c]) {
-      return squares[a];
-    }
-  }
-  return null;
 }

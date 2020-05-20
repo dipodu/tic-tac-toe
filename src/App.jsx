@@ -11,9 +11,13 @@ function App() {
   const [player1Score, setPlayer1Score] = useState(0);
   const [player2Score, setPlayer2Score] = useState(0);
 
-  function updateScore(whoWon) {
-    console.log(`THE WINNER IS:  ${whoWon}`);
-  }
+  const updateScore = (whoWon) => {
+    if (whoWon === "X") {
+      setPlayer1Score((count) => count + 1);
+    } else if (whoWon === "O") {
+      setPlayer2Score((count) => count + 1);
+    }
+  };
 
   return (
     <Container id="main">
@@ -27,12 +31,11 @@ function App() {
             player="Player1"
             score={player1Score}
             picture={player1URLImage}
-            onGameOver={updateScore}
           />
         </Col>
 
         <Col sm="6">
-          <Board />
+          <Board updateWinnerScore={updateScore} />
         </Col>
 
         <Col className="playerScoreCol" sm="3">
