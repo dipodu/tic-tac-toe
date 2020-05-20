@@ -1,8 +1,8 @@
 import React from "react";
-import { Col, Card } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 
 export default function Player(props) {
-  const { player, score, picture } = props;
+  const { playerName, score, picture } = props;
   return (
     <Col>
       <div className="card">
@@ -11,7 +11,7 @@ export default function Player(props) {
         </div>
         <div className="card-inner">
           <div className="header">
-            <h2>{player}</h2>
+            <h2>{playerName}</h2>
           </div>
           <div className="playerScore">
             <p>{score}</p>

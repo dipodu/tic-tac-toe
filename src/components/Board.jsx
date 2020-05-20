@@ -7,30 +7,13 @@ export default function Board(props) {
   const [xIsNext, setXisNext] = useState(true);
   const [moveNumber, setMoveNumber] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
-
   const { updateWinnerScore } = props;
-
-  const handleClick = (index) => {
-    const currentSquares = [...boardSquares];
-
-    if (currentSquares[index] !== null) {
-      return;
-    } else if (calculateWinner(boardSquares)) {
-      return;
-    }
-    moveMade();
-    currentSquares[index] = xIsNext ? "X" : "O";
-    setBoardSquares(currentSquares);
-    setXisNext(!xIsNext);
-  };
 
   useEffect(() => {
     //calculate if game is over
     const state = calculateWinner(boardSquares);
-    const moves = moveNumber;
-
     const isGameFinished =
-      state === "X" || state === "O" || (state === null && moves === 9)
+      state === "X" || state === "O" || (state === null && moveNumber === 9)
         ? true
         : false;
 
@@ -38,12 +21,29 @@ export default function Board(props) {
   }, [boardSquares]);
 
   useEffect(() => {
-    //WHEN GAME IS OVER
-
+    //updates score of the winner
     const result = calculateWinner(boardSquares);
-
     updateWinnerScore(result);
   }, [isGameOver]);
+
+  const handleClick = (squareClicked) => {
+    const currentSquares = [...boardSquares];
+
+    if (
+      currentSquares[squareClicked] !== null ||
+      calculateWinner(boardSquares)
+    ) {
+      return;
+    }
+    moveMade();
+    currentSquares[squareClicked] = xIsNext ? "X" : "O";
+    setBoardSquares(currentSquares);
+    setXisNext(!xIsNext);
+  };
+
+  const moveMade = () => {
+    setMoveNumber((increase) => increase + 1);
+  };
 
   const renderSquare = (index) => {
     return (
@@ -51,35 +51,14 @@ export default function Board(props) {
     );
   };
 
-  function moveMade() {
-    setMoveNumber(moveNumber + 1);
-  }
-
-  function handleRestart() {
+  const handleRestart = () => {
     const currentSquares = Array(9).fill(null);
-    const xNext = true;
     setBoardSquares(currentSquares);
-    setXisNext(xNext);
+    setXisNext(true);
     setMoveNumber(0);
-  }
+  };
 
-  let status;
-  const winner = calculateWinner(boardSquares);
-  status = winner
-    ? `${winner} IS THE WINNER`
-    : moveNumber === 9
-    ? "ITS A DRAW"
-    : `It's your turn: ${xIsNext ? "X" : "O"}`;
-
-  function Square(props) {
-    return (
-      <Button className="btn-dark" onClick={props.onClick}>
-        <span className="cellXO">{props.value}</span>
-      </Button>
-    );
-  }
-
-  function calculateWinner(squares) {
+  const calculateWinner = (currentBoardState) => {
     const winningCombinations = [
       [0, 1, 2],
       [3, 4, 5],
@@ -95,15 +74,30 @@ export default function Board(props) {
       const [a, b, c] = winningCombinations[i];
       //Check to see if values in current square array matches any of the winning combinations
       if (
-        squares[a] &&
-        squares[a] === squares[b] &&
-        squares[b] === squares[c]
+        currentBoardState[a] &&
+        currentBoardState[a] === currentBoardState[b] &&
+        currentBoardState[b] === currentBoardState[c]
       ) {
-        return squares[a];
+        return currentBoardState[a];
       }
     }
     return null;
-  }
+  };
+
+  const Square = (props) => {
+    return (
+      <Button className="btn-dark" onClick={props.onClick}>
+        <span className="cellXO">{props.value}</span>
+      </Button>
+    );
+  };
+
+  const winner = calculateWinner(boardSquares);
+  let status = winner
+    ? `${winner} IS THE WINNER`
+    : moveNumber === 9
+    ? "ITS A DRAW"
+    : `It's your turn: ${xIsNext ? "X" : "O"}`;
 
   return (
     <div className="tic-col">
@@ -126,9 +120,8 @@ export default function Board(props) {
           {renderSquare(8)}
         </div>
       </div>
-
       <Button id="resetButton" className="btn-success" onClick={handleRestart}>
-        RESET
+        Reset Game
       </Button>
     </div>
   );

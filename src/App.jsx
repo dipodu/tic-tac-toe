@@ -1,36 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Container, Row, Col } from "react-bootstrap";
 import "./App.css";
 import Player from "./components/Player.jsx";
 import Board from "./components/Board.jsx";
-
-const player1URLImage = "./images/player1image.png";
-const player2URLImage = "./images/player2image.png";
 
 function App() {
   const [player1Score, setPlayer1Score] = useState(0);
   const [player2Score, setPlayer2Score] = useState(0);
 
-  const updateScore = (whoWon) => {
-    if (whoWon === "X") {
-      setPlayer1Score((count) => count + 1);
-    } else if (whoWon === "O") {
-      setPlayer2Score((count) => count + 1);
+  const updateScore = (whoWonTheGame) => {
+    if (whoWonTheGame === "X") {
+      setPlayer1Score((score) => score + 1);
+    } else if (whoWonTheGame === "O") {
+      setPlayer2Score((score) => score + 1);
     }
   };
 
   return (
-    <Container id="main">
-      <Row className="header">
-        <h1>TIC TAC TOE GAME</h1>
-      </Row>
-
+    <Container fluid id="main">
       <Row className="main-body">
         <Col className="playerScoreCol" sm="3">
           <Player
-            player="Player1"
+            playerName="Player1"
             score={player1Score}
-            picture={player1URLImage}
+            picture="./images/player1image.png"
           />
         </Col>
 
@@ -40,9 +33,9 @@ function App() {
 
         <Col className="playerScoreCol" sm="3">
           <Player
-            player="Player2"
+            playerName="Player2"
             score={player2Score}
-            picture={player2URLImage}
+            picture="./images/player2image.png"
           />
         </Col>
       </Row>
